@@ -49,28 +49,32 @@ class LinkedList:
         return get_data
 
     def remove(self, index):
-        if index < 0 or index > self.get_length():
+        if index < 0 or index >= self.get_length():
             print("Provide a valid index within Linkedlist's range")
         if index == 0:
             self.head = self.head.next
+            return self
         current = self.head
         count = 0
         while current:
             if count == index - 1:
                 current.next = current.next.next
                 break
+            current = current.next
             count += 1
-        return self
 
     def insert(self, index, data):
-        if index < 0 or index > self.get_length():
+        if index < 0 or index >= self.get_length():
             print("Provide a valid index within Linkedlist's range")
+        if index == 0:
+            return self.unshift(data)
         current = self.head
         count = 0
         while current:
             if count == index - 1:
-                current.next = Node(data)
+                current.next = Node(data, current.next)
                 break
+            current = current.next
             count += 1
         return self
 
@@ -95,13 +99,33 @@ class LinkedList:
             if count == index - 1:
                 current.next = node
                 break
+            count += 1
+            current = current.next
         return self
+
+    def print_values(self):
+        if self.head is None:
+            print("Linked list is empty")
+            return
+        itr = self.head
+        llstr = ""
+        while itr:
+            llstr += f"{itr.data}-->"
+            itr = itr.next
+        return llstr
 
 
 l = LinkedList(3)
 l.insert_at_end(4)
 l.insert_at_end(5)
 l.insert_at_end(6)
-l.set(1, 50)
-print(l.head.next.__dict__)
+l.insert_at_end(7)
+l.insert_at_end(8)
+l.set(5, 50)
+l.remove(5)
+l.insert(3, 59)
+print(l.head.data)
+print(l.tail.data)
+print(l.head.next.__dict__['data'])
+print(l.print_values())
 
