@@ -114,6 +114,16 @@ class LinkedList:
             itr = itr.next
         return llstr
 
+    def reverse(self):
+        prev = None
+        current = self.head
+        while (current is not None):
+            next = current.next
+            current.next = prev
+            prev = current
+            current = next
+        self.head = prev
+
 
 l = LinkedList(3)
 l.insert_at_end(4)
@@ -128,4 +138,5 @@ print(l.head.data)
 print(l.tail.data)
 print(l.head.next.__dict__['data'])
 print(l.print_values())
+print(l.reverse())
 
